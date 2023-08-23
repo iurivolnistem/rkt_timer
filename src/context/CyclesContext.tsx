@@ -35,6 +35,8 @@ export function CyclesContextProvider({
   children,
 }: CyclesContextProviderProps) {
   const [cycles, dispatch] = useReducer((state: Cycle[], action: any) => {
+    console.log(state)
+    console.log(action)
     if (action.type === 'ADD_NEW_CYCLE') {
       return [...state, action.payload.newCycle]
     }
@@ -43,7 +45,6 @@ export function CyclesContextProvider({
   }, [])
   const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
-
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
 
   function createNewCycle(data: CreateCycleData) {
@@ -59,15 +60,13 @@ export function CyclesContextProvider({
     dispatch({
       type: 'ADD_NEW_CYCLE',
       payload: {
-        data: newCycle,
+        newCycle,
       },
     })
 
     setActiveCycleId(id)
     setAmountSecondsPassed(0)
     // setCycles((state) => [...state, newCycle])
-
-    // reset()
   }
 
   function markCurrentCycleAsFineshed() {
